@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:recipe_app/homePage.dart';
 import 'package:recipe_app/login.dart';
 import 'package:recipe_app/sign_up.dart';
-import 'main.dart';
+
 class Landing extends StatelessWidget {
-  const Landing ({Key? key}) : super(key: key);
+  const Landing({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +66,8 @@ class Landing extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(30)),
                           )),
                       onPressed: () {
-
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const LogIn()));
                       },
                       child: const Text("LogIn",
                           style: TextStyle(
@@ -85,12 +84,15 @@ class Landing extends StatelessWidget {
                             elevation: MaterialStateProperty.all(5),
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.red.shade300),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                             )),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SignUp()));
+                        },
                         child: const Text(
                           "Sign Up",
                           style: TextStyle(

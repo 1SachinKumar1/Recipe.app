@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'main.dart';
+import 'package:recipe_app/auth%20page/auth.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -20,16 +18,21 @@ class _LogInState extends State<LogIn> {
     showDialog(
       context: context,
       builder: (context) {
-        return const Center(child: CircularProgressIndicator(color: Colors.deepPurple,));
+        return const Center(
+            child: CircularProgressIndicator(
+          color: Colors.deepPurple,
+        ));
       },
     );
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email.text.trim(),
       password: pass.text.trim(),
     );
-    Navigator.of(context).pop();
-    // Get.toNamed("home");
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const Auth()),
+        (route) => false);
   }
+
   @override
   void dispose() {
     super.dispose();
