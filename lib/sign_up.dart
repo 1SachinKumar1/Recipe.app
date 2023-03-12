@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'login.dart';
+
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
@@ -8,11 +11,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-
   final email = TextEditingController();
   final pass = TextEditingController();
 
-   void signUp () async{
+  void signUp() async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email.text.trim(), password: pass.text.trim());
   }
@@ -23,7 +25,6 @@ class _SignUpState extends State<SignUp> {
     email.dispose();
     pass.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +53,21 @@ class _SignUpState extends State<SignUp> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.email,
-                        color: Colors.deepPurple,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.deepPurple, width: 2)),
-                      hintText: "Email",
-                      fillColor: Colors.white,
-                      filled: true,
-                    )),
+                  prefixIcon: const Icon(
+                    Icons.email,
+                    color: Colors.deepPurple,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.deepPurple, width: 2)),
+                  hintText: "Email",
+                  fillColor: Colors.white,
+                  filled: true,
+                )),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -81,8 +82,8 @@ class _SignUpState extends State<SignUp> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.deepPurple, width: 2)),
+                        borderSide:
+                            BorderSide(color: Colors.deepPurple, width: 2)),
                     hintText: "Password",
                     fillColor: Colors.white,
                     filled: true,
@@ -98,32 +99,34 @@ class _SignUpState extends State<SignUp> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Colors.deepPurple),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              )
-                          )),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.deepPurple),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ))),
                       onPressed: signUp,
-                      child: const Text("Sign Up",
-                        style: TextStyle(fontSize: 28, color: Colors.white),)),
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(fontSize: 28, color: Colors.white),
+                      )),
                 ),
               ),
-              const Text("Already a member?", style:TextStyle(fontSize: 18)),
-              // GestureDetector(
-              //   onTap: (){
-              //     Navigator.pushNamed(context, "login");
-              //   },
-                 GestureDetector(
-                   // onTap: (){
-                   //   Navigator.pop(context, MaterialPageRoute(builder: (context)=>const SignUp(),));
-                   // },
-                   child: const Text(
-                    "Login Now!", style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold,fontSize: 16),),
-                 ),
+              const Text("Already a member?", style: TextStyle(fontSize: 18)),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const LogIn()));
+                },
+                child: const Text(
+                  "Login Now!",
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ),
             ],
           ),
         ),
