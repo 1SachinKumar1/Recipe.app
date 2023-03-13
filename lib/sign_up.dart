@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:recipe_app/homePage.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
@@ -13,10 +14,30 @@ class _SignUpState extends State<SignUp> {
   final email = TextEditingController();
   final pass = TextEditingController();
 
-  void signUp() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email.text.trim(), password: pass.text.trim());
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+
+  Future<UserCredential?> signUp(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
+
 
   @override
   void dispose() {
@@ -51,26 +72,28 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                    controller: email,
                     decoration: InputDecoration(
-                  prefixIcon: const Icon(
-                    Icons.email,
-                    color: Colors.deepPurple,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide:
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        color: Colors.deepPurple,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide:
                           BorderSide(color: Colors.deepPurple, width: 2)),
-                  hintText: "Email",
-                  fillColor: Colors.white,
-                  filled: true,
-                )),
+                      hintText: "Email",
+                      fillColor: Colors.white,
+                      filled: true,
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: pass,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(
                       Icons.password,
@@ -82,7 +105,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     focusedBorder: const OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: Colors.deepPurple, width: 2)),
+                        BorderSide(color: Colors.deepPurple, width: 2)),
                     hintText: "Password",
                     fillColor: Colors.white,
                     filled: true,
@@ -99,15 +122,26 @@ class _SignUpState extends State<SignUp> {
                   child: ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.deepPurple),
+                          MaterialStateProperty.all(Colors.deepPurple),
                           shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ))),
-                      onPressed: signUp,
-                      child: const Text(
-                        "Sign Up",
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ))),
+                      onPressed: () async {
+                        UserCredential? userCredential = await signUp(
+                            email.text, pass.text);
+                        if (userCredential != null) {
+                          // User signed up successfully
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) => const HomePage()),
+                                  (route) => false);
+                        } else {
+                          // There was an error signing up the user
+                        }
+                      },
+                      child:
+                      const Text("Sign Up",
                         style: TextStyle(fontSize: 28, color: Colors.white),
                       )),
                 ),
@@ -129,7 +163,11 @@ class _SignUpState extends State<SignUp> {
             ],
           ),
         ),
-      ),
+
+      )
+
+      ,
+
     );
   }
 }
