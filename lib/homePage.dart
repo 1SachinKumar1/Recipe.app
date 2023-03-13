@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'Recipes/ButterChicken.dart';
 import 'auth page/auth.dart';
 
 class HomePage extends StatelessWidget {
@@ -40,20 +41,27 @@ class HomePage extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: const [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: (AssetImage(
-                          'assets/images/sophia-louw-w5l0oNGIxf4-unsplash.jpg')),
+                  children:  [
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => const Butter()));
+                      },
+                      child: const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: (
+                            AssetImage(
+                            'assets/images/sophia-louw-w5l0oNGIxf4-unsplash.jpg')),
+                      ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 14),
                       child: CircleAvatar(
                         radius: 50,
                         backgroundImage: (AssetImage("assets/images/fish.jpg")),
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 14),
                       child: CircleAvatar(
                         radius: 50,
@@ -61,7 +69,7 @@ class HomePage extends StatelessWidget {
                             (AssetImage("assets/images/paneer.jpg")),
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 14),
                       child: ClipRRect(
                         child: CircleAvatar(
@@ -73,7 +81,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 14),
                       child: CircleAvatar(
                         radius: 50,
