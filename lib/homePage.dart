@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/Recipes/gulabJamun.dart';
+import 'Recipes/ButterChicken.dart';
+import 'Recipes/FishCurry.dart';
 import 'auth page/auth.dart';
 
 class HomePage extends StatelessWidget {
@@ -40,20 +43,33 @@ class HomePage extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: const [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: (AssetImage(
-                          'assets/images/sophia-louw-w5l0oNGIxf4-unsplash.jpg')),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 14),
-                      child: CircleAvatar(
+                  children:  [
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => const Butter()));
+                      },
+                      child: const CircleAvatar(
                         radius: 50,
-                        backgroundImage: (AssetImage("assets/images/fish.jpg")),
+                        backgroundImage: (
+                            AssetImage(
+                            'assets/images/sophia-louw-w5l0oNGIxf4-unsplash.jpg')),
                       ),
                     ),
-                    Padding(
+                     Padding(
+                      padding: const EdgeInsets.only(left: 14),
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder:(context)=>const Fish()));
+                        },
+                        child: const CircleAvatar(
+                          radius: 50,
+                          backgroundImage: (AssetImage("assets/images/fish.jpg")),
+                        ),
+                      ),
+                    ),
+                    const Padding(
                       padding: EdgeInsets.only(left: 14),
                       child: CircleAvatar(
                         radius: 50,
@@ -61,7 +77,7 @@ class HomePage extends StatelessWidget {
                             (AssetImage("assets/images/paneer.jpg")),
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 14),
                       child: ClipRRect(
                         child: CircleAvatar(
@@ -73,7 +89,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 14),
                       child: CircleAvatar(
                         radius: 50,
@@ -124,9 +140,14 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
-                child: Image.asset(
-                  "assets/images/jamun.png",
-                  fit: BoxFit.fill,
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const Jamun()));
+                  },
+                  child: Image.asset(
+                    "assets/images/jamun.png",
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
